@@ -1,0 +1,15 @@
+# /bin/bash
+# Git prompt function
+get_git_prompt() {
+    branch=$(git branch --show-current 2>/dev/null)
+    dirty=$(git status --short 2>/dev/null)
+    if [ -n "$branch" ]; then
+        if [ -n "$dirty" ]; then
+            echo -ne "\033[01;33m($branch)\033[00m"
+        else
+            echo -ne "\033[01;36m($branch)\033[00m"
+        fi
+    fi
+}
+# Short prompt: user@:folder$
+PS1='\[\033[01;32m\]\u@:\W\[\033[00m\]\[$(get_git_prompt)\]\$ '
